@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "lib": [
+      "dom",
+      "es5",
+      "ScriptHost",
+      "es2015.promise"
+    ],
+    "jsx": "react"
+  },
+  "include": ["app"],
+  "exclude": ["**/node_modules", "**/.*"]
+}
