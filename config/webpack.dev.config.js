@@ -78,6 +78,11 @@ const config = merge(commonConfig, {
         exclude: [nodeModuleDir]
       },
       {
+        test: /\.(css)$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        include: /(react-quill|braft-editor)/
+      },
+      {
         test: /antd.*\.less$/,
         use: [
           "style-loader",
