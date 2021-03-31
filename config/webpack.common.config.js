@@ -3,10 +3,10 @@ const process = require('process')
 const webpack = require('webpack')
 const nodeModuleDir = path.resolve(process.cwd(), 'node_module')
 const appDir = path.resolve(process.cwd(), 'app')
+const pageDir = path.resolve(process.cwd(), 'app/page')
 const tsImportPluginFactory = require('ts-import-plugin')
-
 module.exports = {
-  entry: {},
+  entry:[path.resolve(pageDir, `./index.tsx`)],
   plugins: [
     new webpack.ProvidePlugin({
       React: 'react',
@@ -24,25 +24,42 @@ module.exports = {
     extensions: [".ts", ".tsx", '.js']
   },
   module: {
-    rules: [{
+    rules: [
+      {
       test: /\.ts(x?)$/,
       use: [
-      {
-        loader:'ts-loader',
-        options: {
-          transpileOnly: true,
-          getCustomTransformers: () => ({
-              before: [ tsImportPluginFactory( [{
-                  libraryName:'antd',
-                  libraryDirectory:'lib',
-                  style:true
-              }]) ]
-          }),
-          compilerOptions: {
-              module: 'es2015'
-          }
-       },
-      }
+        {
+          loader:'ts-loader',
+          options: {
+            transpileOnly: true,
+            getCustomTransformers: () => ({
+                before: [ tsImportPluginFactory( [{
+                    libraryName:'antd',
+                    libraryDirectory:'lib',
+                    style:true
+                }]) ]
+            }),
+            compilerOptions: {
+                module: 'es2015'
+            }
+          },
+        },
+        // {
+        //   test: /antd.*\.less$/,
+        //   use: [
+        //     MiniCssExtractPlugin.loader,
+        //     "css-loader",
+        //     {
+        //         loader: "less-loader",
+        //         options: {
+        //             lessOptions: {
+        //                 javascriptEnabled: true,
+        //             }
+        //         }
+        //     }
+        //   ],
+        //   include: /(antd)/
+        // },
       ],
       include: [appDir],
       exclude: [nodeModuleDir]

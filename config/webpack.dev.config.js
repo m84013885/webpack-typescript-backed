@@ -1,3 +1,4 @@
+const mode = 'development'
 const webpack = require('webpack')
 const commonConfig = require('./webpack.common.config')
 const { merge } = require('webpack-merge')
@@ -6,12 +7,10 @@ const process = require('process')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const nodeModuleDir = path.resolve(process.cwd(), 'node_module')
 const ip = require('ip')
-const fs = require('fs')
 const port = 8087
 const host = ip.address()
 const appDir = path.resolve(process.cwd(), 'app')
 const pageDir = path.resolve(process.cwd(), 'app/page')
-const routers = fs.readdirSync(pageDir).filter(item => !item.includes('.') && item)
 const childProcess = require('child_process')
 let cmd
 switch (process.platform) {
@@ -26,7 +25,7 @@ switch (process.platform) {
     break
 }
 const config = merge(commonConfig, {
-  mode: 'development',
+  mode,
   target: 'web',
   devServer: {
     compress: true,
@@ -42,11 +41,15 @@ const config = merge(commonConfig, {
       }
     },
     after: function (app, server, compiler) {
-      childProcess.exec(`${cmd} http://${host}:${port}/${routers[0]}`)
+      childProcess.exec(`${cmd} http://${host}:${port}`)
     }
   },
   plugins: [
     new webpack.DefinePlugin({ __DEV__: 'true' }),
+    new HtmlWebpackPlugin({
+      template: path.join(pageDir, './index.html'),
+      inject: true
+    })
   ],
   devtool: 'inline-source-map',
   module: {
@@ -101,17 +104,6 @@ const config = merge(commonConfig, {
       }
     ]
   }
-})
-routers.map((item) => {
-  const tempSrc = path.join(pageDir, `./${item}/index.html`)
-  const plugin = new HtmlWebpackPlugin({
-    filename: `${item}`,
-    template: tempSrc,
-    inject: true,
-    chunks: [item]
-  })
-  config.entry[item] = [path.resolve(pageDir, `./${item}/index.tsx`)]
-  config.plugins.push(plugin)
 })
 
 module.exports = config

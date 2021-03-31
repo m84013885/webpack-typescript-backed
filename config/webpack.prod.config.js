@@ -1,3 +1,4 @@
+const mode = 'production'
 const webpack = require('webpack')
 const commonConfig = require('./webpack.common.config')
 const { merge } = require('webpack-merge')
@@ -10,12 +11,10 @@ const process = require('process')
 const nodeModuleDir = path.resolve(process.cwd(), 'node_module')
 const appDir = path.resolve(process.cwd(), 'app')
 const pageDir = path.resolve(process.cwd(), 'app/page')
-const fs = require('fs')
-const routers = fs.readdirSync(pageDir).filter(item => !item.includes('.') && item)
 const outputPath = path.resolve(process.cwd(), 'build')
 const assestPathName = 'assets'
 const config = merge(commonConfig, {
-  mode: 'production',
+  mode,
   output: {
     path: outputPath,
     chunkFilename: assestPathName + `/[name].[chunkhash:5].js`,
@@ -46,7 +45,14 @@ const config = merge(commonConfig, {
     new webpack.DefinePlugin({ __DEV__: 'false' }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({ filename: assestPathName + `/[name].[chunkhash:5].css` }),
-    new OptimizeCSSAssetsPlugin({})
+    new OptimizeCSSAssetsPlugin({}),
+    new HtmlWebpackPlugin({
+      template: path.join(pageDir, './index.html'),
+      inject: true,
+      minify: {
+        collapseWhitespace: true,//删除空格、换行
+      }
+    })
   ],
   module: {
     rules: [
@@ -143,20 +149,6 @@ const config = merge(commonConfig, {
       }
     ]
   }
-})
-routers.map((item) => {
-  const tempSrc = path.join(pageDir, `./${item}/index.html`)
-  const plugin = new HtmlWebpackPlugin({
-    filename: `${item}.html`,
-    template: tempSrc,
-    inject: true,
-    chunks: [item],
-    minify: {
-      collapseWhitespace: true,//删除空格、换行
-    },
-  })
-  config.entry[item] = [path.resolve(pageDir, `./${item}/index.tsx`)]
-  config.plugins.push(plugin)
 })
 
 module.exports = config

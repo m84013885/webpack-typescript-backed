@@ -1,10 +1,10 @@
-import style from "./main.css"
+import style from "./index.css"
 import fetch from '../../../utils/fetch'
 import { storeContext } from '../../../utils/stroe'
 import { Button } from 'antd'
 import { Mask } from '../../../components'
 
-const Main = () => {
+const Home = () => {
     const store = useContext(storeContext)
     const { setMask } = store
     return (
@@ -13,7 +13,7 @@ const Main = () => {
             <div className={style.scrollView}>
                 {/* something */}
                 <div className={style.coupon}>
-                    <span>123</span>
+                    <span>123456</span>
                 </div>
                 <div onInput={(e: any) => { console.log(e.target.innerHTML) }}>
                     213
@@ -35,4 +35,4 @@ const Main = () => {
     )
 }
 
-export default Main
+export default Home

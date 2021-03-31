@@ -31,8 +31,6 @@
     "mini-css-extract-plugin": "^1.4.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "postcss-loader": "^5.2.0",
-    "postcss-px-to-viewport": "^1.1.1",
-    "postcss-pxtorem": "^6.0.0",
     "style-loader": "^2.0.0",
     "ts-import-plugin": "^1.6.7",
     "ts-jest": "^26.5.4",
@@ -49,6 +47,8 @@
     "md5": "^2.3.0",
     "antd": "^4.15.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
   }
 }
