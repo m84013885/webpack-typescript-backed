@@ -26,7 +26,7 @@ const config = merge(commonConfig, {
     splitChunks: {
       chunks: 'all',  // 加载内容
       minSize: {
-        javascript: 100000, // 模块要大于30kb才会进行提取
+        javascript: 100000, // 模块要大于100kb才会进行提取
         style: 50000, // 模块要大于50kb才会进行提取
       },
       minChunks: 1,  // 被提取的模块必须被引用1次
