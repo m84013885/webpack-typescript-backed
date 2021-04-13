@@ -1,6 +1,4 @@
-
-
-const createStore = () => {
+const CreateStore = (): any => {
     // 控制弹窗
     const [mask, setMask] = useState(null)
 
@@ -10,4 +8,4 @@ const createStore = () => {
     }
 }
 
-export default createStore
+export default CreateStore

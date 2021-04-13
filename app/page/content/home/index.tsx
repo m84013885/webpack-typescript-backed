@@ -1,5 +1,5 @@
 import style from "./index.css"
-import fetch from '../../../utils/fetch'
+// import fetch from '../../../utils/fetch'
 import { storeContext } from '../../../utils/stroe'
 import { Button } from 'antd'
 import { Mask } from '../../../components'

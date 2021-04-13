@@ -5,6 +5,7 @@ const nodeModuleDir = path.resolve(process.cwd(), 'node_module')
 const appDir = path.resolve(process.cwd(), 'app')
 const pageDir = path.resolve(process.cwd(), 'app/page')
 const tsImportPluginFactory = require('ts-import-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 module.exports = {
   entry:[path.resolve(pageDir, `./index.tsx`)],
   plugins: [
@@ -19,6 +20,12 @@ module.exports = {
       useRef: ['react','useRef'],
       useContext: ['react','useContext'],
     }),
+    new ESLintPlugin({
+      extensions: ['.ts', '.tsx', '.js'],
+      failOnError: true,
+      emitWarning: true,
+      emitError: true,
+    })
   ],
   resolve: {
     extensions: [".ts", ".tsx", '.js']

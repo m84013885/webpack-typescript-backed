@@ -1,34 +1,32 @@
-
-
-if (typeof Object.assign != 'function') {
-    Object.assign = function (target: any) {
-        for (var i = 1; i < arguments.length; i++) {
-            var source = arguments[i];
-            for (var key in source) {
+if (typeof Object.assign !== 'function') {
+    Object.assign = function (target: any, ...argument: any[]): any {
+        for (let i = 1; i < argument.length; i++) {
+            const source = argument[i]
+            for (const key in source) {
                 if (Object.prototype.hasOwnProperty.call(source, key)) {
-                    target[key] = source[key];
+                    target[key] = source[key]
                 }
             }
         }
-        return target;
+        return target
     }
 }
 
 if (![].fill) {
-    Array.prototype.fill = function (value) {
-        var O = Object(this);
-        var len = parseInt(O.length);
-        var relativeStart = parseInt(arguments[1] || 0);
-        var k = relativeStart < 0
+    Array.prototype.fill = function (value, ...argument: any[]) {
+        const O = Object(this)
+        const len = parseInt(O.length)
+        const relativeStart = parseInt(argument[0] || 0)
+        let k = relativeStart < 0
             ? Math.max(len + relativeStart, 0)
-            : Math.min(relativeStart, len);
-        var relativeEnd = parseInt(arguments[2] || len);
-        var final = relativeEnd < 0
+            : Math.min(relativeStart, len)
+        const relativeEnd = parseInt(argument[1] || len)
+        const final = relativeEnd < 0
             ? Math.max(len + relativeEnd, 0)
-            : Math.min(relativeEnd, len);
+            : Math.min(relativeEnd, len)
         for (; k < final; k++) {
-            O[k] = value;
+            O[k] = value
         }
-        return O;
-    };
+        return O
+    }
 }
