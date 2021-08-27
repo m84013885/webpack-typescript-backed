@@ -40,7 +40,7 @@ const config = merge(commonConfig, {
         changeOrigin: true
       }
     },
-    after: function (app, server, compiler) {
+    onAfterSetupMiddleware: function (app, server, compiler) {
       childProcess.exec(`${cmd} http://${host}:${port}`)
     }
   },
